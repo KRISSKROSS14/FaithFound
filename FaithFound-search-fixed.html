@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="FaithFound helps you explore real-life questions through the Bible, reflection and practical next steps.">
+<title>FaithFound — Real questions. Biblical truth. Practical steps.</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(#f7f5ef, #151a17);
+  --surface: light-dark(#fffefa, #202722);
+  --surface-2: light-dark(#eeeee4, #29332c);
+  --text: light-dark(#202c25, #f3f2e9);
+  --muted: light-dark(#657067, #b7c0b7);
+  --line: light-dark(#dfe2d7, #3a463d);
+  --green: light-dark(#234d38, #a7d2b1);
+  --green-strong: light-dark(#1b3e2c, #d3ead6);
+  --gold: light-dark(#c49a52, #e1bd77);
+  --shadow: 0 14px 36px rgba(24, 42, 29, .08);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; }
+button, input { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+a { color: inherit; }
+.root { min-height: 100vh; background-color: var(--bg); }
+.shell { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+header { padding: 22px 0; border-bottom: 1px solid var(--line); }
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; letter-spacing: -.04em; font-size: 1.28rem; }
+.brand-mark { width: 34px; height: 34px; display: grid; place-items: center; background: var(--green); color: light-dark(#fffefa,#172019); border-radius: 11px 11px 11px 4px; }
+.brand-mark svg { width: 21px; height: 21px; }
+.nav-links { display: flex; align-items: center; gap: 25px; color: var(--muted); font-size: .92rem; }
+.nav-links a { text-decoration: none; }
+.nav-links a:hover { color: var(--text); }
+.nav-cta { background: var(--green); color: light-dark(white,#152018) !important; padding: 10px 15px; border-radius: 999px; font-weight: 700; }
+.hero { display: grid; grid-template-columns: 1.15fr .85fr; align-items: center; gap: 56px; padding: 76px 0 66px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: .13em; font-size: .73rem; font-weight: 800; color: var(--green); }
+.eyebrow::before { content: ""; display: inline-block; width: 22px; height: 2px; background: var(--gold); }
+h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; font-size: clamp(2.8rem, 6vw, 5.2rem); letter-spacing: -.055em; line-height: 1.01; margin: 17px 0 20px; max-width: 680px; }
+h1 em { color: var(--green); font-weight: 400; }
+.hero-copy { max-width: 560px; color: var(--muted); font-size: 1.08rem; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.btn { border: 1px solid transparent; border-radius: 999px; padding: 12px 18px; cursor: pointer; text-decoration: none; font-weight: 750; display: inline-flex; align-items: center; justify-content: center; gap: 9px; transition: transform .15s ease, background .15s ease; }
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background: var(--green); color: light-dark(white,#142017); }
+.btn-secondary { border-color: var(--line); background: var(--surface); color: var(--text); }
+.hero-art { min-height: 380px; border-radius: 46% 46% 18px 18px; background: var(--surface-2); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.sun { position: absolute; width: 160px; height: 160px; border-radius: 50%; background: var(--gold); opacity: .9; top: 47px; right: 49px; }
+.hill { position: absolute; width: 125%; height: 56%; border-radius: 50% 50% 0 0; bottom: -18%; transform: rotate(-9deg); background: light-dark(#a6b79b,#415847); }
+.hill.two { width: 130%; height: 43%; bottom: -16%; left: -20%; transform: rotate(13deg); background: var(--green); }
+.book { position: relative; z-index: 2; margin-top: 78px; width: 190px; height: 135px; transform: rotate(-8deg); filter: drop-shadow(0 16px 12px rgba(0,0,0,.16)); }
+.book-page { position: absolute; width: 50%; height: 100%; background: #fffdf4; border: 1px solid #e5e0cf; top: 0; }
+.book-page.left { left: 0; transform: skewY(7deg); border-radius: 8px 0 0 5px; }
+.book-page.right { right: 0; transform: skewY(-7deg); border-radius: 0 8px 5px 0; }
+.book-spine { position: absolute; width: 7px; height: 100%; left: calc(50% - 3px); top: 0; background: #d7cfb6; z-index: 3; }
+.book-page::after { content: ""; position: absolute; left: 16px; right: 12px; top: 28px; height: 2px; background: #c9c4b4; box-shadow: 0 11px #c9c4b4, 0 22px #c9c4b4, 0 33px #c9c4b4, 0 44px #c9c4b4; opacity: .7; }
+.art-note { position: absolute; bottom: 24px; z-index: 4; background: var(--surface); border: 1px solid var(--line); padding: 12px 16px; border-radius: 14px; box-shadow: var(--shadow); font-size: .83rem; }
+.art-note strong { display: block; }
+section { padding: 36px 0 70px; }
+.section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+h2 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 500; letter-spacing: -.035em; margin: 8px 0 0; }
+.section-sub { color: var(--muted); margin: 8px 0 0; max-width: 540px; }
+.search-wrap { display: flex; gap: 10px; max-width: 430px; width: 100%; }
+.search-wrap input { width: 100%; min-width: 0; border: 1px solid var(--line); border-radius: 999px; padding: 12px 16px; background: var(--surface); color: var(--text); outline-offset: 3px; }
+.search-wrap button { border: 0; border-radius: 999px; padding: 0 18px; background: var(--green); color: light-dark(white,#142017); font-weight: 800; cursor: pointer; }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; margin: 24px 0; }
+.filter { border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--muted); padding: 8px 13px; cursor: pointer; font-size: .88rem; }
+.filter.active, .filter:hover { background: var(--green); border-color: var(--green); color: light-dark(white,#142017); }
+.perspective-panel { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; margin: 0 0 24px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.perspective-copy { flex: 1 1 240px; }
+.perspective-copy strong { display: block; margin-bottom: 3px; }
+.perspective-copy p { margin: 0; color: var(--muted); font-size: .9rem; }
+.perspective-options { display: flex; flex-wrap: wrap; gap: 7px; }
+.perspective-option { border: 1px solid var(--line); border-radius: 999px; padding: 7px 11px; color: var(--muted); font-size: .82rem; background: var(--surface-2); }
+.coming-soon { display: inline-block; margin-bottom: 7px; color: var(--green); font-size: .68rem; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { border: 1px solid var(--line); background: var(--surface); border-radius: 18px; padding: 22px; min-height: 230px; display: flex; flex-direction: column; box-shadow: 0 2px 0 rgba(0,0,0,.01); }
+.card[hidden] { display: none !important; }
+.card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.card-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px; background: var(--surface-2); color: var(--green); }
+.card-icon svg { width: 22px; height: 22px; }
+.tag { color: var(--green); font-size: .73rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.card h3 { font-family: Georgia, "Times New Roman", serif; font-size: 1.35rem; font-weight: 500; margin: 18px 0 7px; letter-spacing: -.02em; }
+.card p { color: var(--muted); margin: 0 0 20px; font-size: .93rem; }
+.card button { align-self: flex-start; margin-top: auto; padding: 0; border: 0; background: transparent; color: var(--green); font-weight: 800; cursor: pointer; }
+.empty { grid-column: 1/-1; border: 1px dashed var(--line); padding: 30px; border-radius: 16px; color: var(--muted); text-align: center; }
+.feature-band { background: var(--green-strong); color: light-dark(#fffefa,#19251c); border-radius: 24px; padding: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+.feature-band .eyebrow { color: var(--gold); }
+.feature-band h2 { max-width: 430px; }
+.feature-band p { opacity: .82; }
+.steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.step { border-top: 1px solid var(--line); padding-top: 16px; }
+.step-num { color: var(--gold); font-weight: 900; font-size: .85rem; }
+.step h3 { margin: 8px 0; font-size: 1.03rem; }
+.step p { color: var(--muted); font-size: .92rem; margin: 0; }
+footer { border-top: 1px solid var(--line); padding: 26px 0 34px; color: var(--muted); font-size: .85rem; }
+.footer-inner { display: flex; justify-content: space-between; align-items: start; gap: 24px; }
+footer p { margin: 5px 0; }
+.modal-backdrop { position: fixed; inset: 0; background: rgba(7,15,10,.56); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 20; }
+.modal-backdrop.open { display: flex; }
+.modal { width: min(600px, 100%); max-height: min(85vh, 760px); overflow: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 28px; box-shadow: 0 24px 80px rgba(0,0,0,.25); }
+.modal-head { display: flex; justify-content: space-between; align-items: start; gap: 16px; }
+.modal h2 { font-size: 2rem; margin: 7px 0 12px; }
+.close { border: 1px solid var(--line); background: var(--surface-2); color: var(--text); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; }
+.modal p { color: var(--muted); }
+.scripture { background: var(--surface-2); border-left: 3px solid var(--gold); padding: 14px 16px; border-radius: 0 12px 12px 0; margin: 18px 0; }
+.scripture strong { display: block; color: var(--green); margin-bottom: 4px; }
+.modal h3 { font-size: 1rem; margin-top: 22px; }
+.modal ul { padding-left: 20px; }
+.modal li { margin: 7px 0; }
+.modal-footnote { border-top: 1px solid var(--line); padding-top: 14px; font-size: .82rem; }
+.editor-backdrop { position: fixed; inset: 0; z-index: 30; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(7,15,10,.62); }
+.editor-backdrop.open { display: flex; }
+.editor-panel { width: min(820px,100%); max-height: 90vh; overflow: auto; padding: 24px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); box-shadow: 0 24px 80px rgba(0,0,0,.28); }
+.editor-panel h2 { font-size: 1.8rem; }
+.editor-intro { color: var(--muted); }
+.editor-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+.editor-field { display: flex; flex-direction: column; gap: 6px; margin: 10px 0; font-size: .88rem; font-weight: 700; }
+.editor-field input, .editor-field textarea { width: 100%; min-width: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); font: inherit; font-weight: 400; }
+.editor-field textarea { min-height: 72px; resize: vertical; }
+.editor-guide { border-top: 1px solid var(--line); padding: 12px 0; }
+.editor-guide summary { cursor: pointer; font-weight: 800; }
+.editor-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+.editor-status { color: var(--green); min-height: 1.4em; font-size: .9rem; }
+.editor-subpanel { margin: 20px 0; padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface-2); }
+.editor-subpanel h3 { margin-top: 0; }
+.editor-page { border-top: 1px solid var(--line); padding: 12px 0; }
+.editor-page summary { cursor: pointer; font-weight: 800; }
+.custom-page-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.custom-page-nav a { display: inline-block; border: 1px solid var(--line); border-radius: 999px; padding: 7px 12px; text-decoration: none; background: var(--surface); }
+.custom-page-content { padding-top: 24px; }
+.custom-page-content .custom-page-body { white-space: pre-wrap; color: var(--muted); }
+@media (max-width: 560px) { .editor-grid { grid-template-columns: 1fr; } .editor-panel { padding: 18px; } }
+@media (max-width: 760px) {
+  .shell { width: min(100% - 28px, 600px); }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .hero { grid-template-columns: 1fr; gap: 34px; padding: 52px 0 42px; }
+  .hero-art { min-height: 290px; }
+  .sun { width: 125px; height: 125px; top: 35px; right: 35px; }
+  .book { transform: scale(.82) rotate(-8deg); margin-top: 45px; }
+  .section-head { display: block; }
+  .search-wrap { margin-top: 20px; }
+  .cards { grid-template-columns: 1fr; }
+  .card { min-height: 0; }
+  .feature-band { grid-template-columns: 1fr; padding: 24px; }
+  .steps { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="root">
+  <header>
+    <div class="shell nav">
+      <a class="brand" href="#top" aria-label="FaithFound home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M6.5 8.5h11"/><path d="M5 21h14"/></svg></span>
+        <span>faithfound<span style="color:var(--gold)">.</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#explore">Explore topics</a>
+        <a href="#approach">Our approach</a>
+        <a class="nav-cta" href="#explore">Find an answer <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+  <main id="top">
+    <div class="shell hero">
+      <div>
+        <div class="eyebrow">Faith for everyday life</div>
+        <h1>Real questions.<br><em>Biblical truth.</em><br>Practical steps.</h1>
+        <p class="hero-copy">Following Jesus isn't about having every answer. It's about learning, asking honest questions, and putting faith into practice — one step at a time.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#explore">Explore questions <span aria-hidden="true">→</span></a>
+          <a class="btn btn-secondary" href="#approach">How FaithFound works</a>
+        </div>
+      </div>
+      <div class="hero-art" role="img" aria-label="Illustration of an open Bible against a sunrise and rolling green hills">
+        <div class="sun"></div><div class="hill"></div><div class="hill two"></div>
+        <div class="book" aria-hidden="true"><div class="book-page left"></div><div class="book-page right"></div><div class="book-spine"></div></div>
+        <div class="art-note"><strong>Start where you are.</strong><span>Grow one step at a time.</span></div>
+      </div>
+    </div>
+    <section id="explore">
+      <div class="shell">
+        <div class="section-head">
+          <div><div class="eyebrow">Explore the library</div><h2>What are you working through?</h2><p class="section-sub">Choose a topic or search a question. Start with what matters in your life right now.</p></div>
+          <form class="search-wrap" id="searchForm" role="search"><input id="searchInput" type="search" placeholder="Try “forgiveness” or “prayer”…" aria-label="Search faith questions"><button type="submit">Search</button></form>
+        </div>
+        <div class="filters" role="group" aria-label="Filter topics">
+          <button class="filter active" data-filter="All" aria-pressed="true">All topics</button>
+          <button class="filter" data-filter="Relationships" aria-pressed="false">Relationships</button>
+          <button class="filter" data-filter="Faith" aria-pressed="false">Faith & doubt</button>
+          <button class="filter" data-filter="Character" aria-pressed="false">Character</button>
+          <button class="filter" data-filter="Habits" aria-pressed="false">Habits & prayer</button>
+        </div>
+        <div class="perspective-panel" aria-label="Christian perspective customisation coming soon">
+          <div class="perspective-copy"><span class="coming-soon">Coming soon</span><strong>Choose your Christian perspective</strong><p>FaithFound will aim to explain different Christian traditions clearly, while keeping Scripture and thoughtful reflection at the centre.</p></div>
+          <div class="perspective-options" aria-label="Planned perspectives"><span class="perspective-option">Broadly Christian</span><span class="perspective-option">Catholic</span><span class="perspective-option">Protestant</span><span class="perspective-option">Orthodox</span></div>
+        </div>
+        <div class="cards" id="cards" aria-live="polite">
+          <article class="card" data-category="Relationships" data-search="dating boundaries relationships respect love">
+            <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.7c0 5.3-8.8 10.1-8.8 10.1S3.2 14 3.2 8.7A4.5 4.5 0 0 1 12 6.4a4.5 4.5 0 0 1 8.8 2.3Z"/></svg></span><span class="tag">Relationships</span></div>
+            <h3>How should Christians date?</h3><p>Think about respect, honesty, boundaries and putting another person's wellbeing first.</p><button data-open="dating">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Faith" data-search="doubt questions god faith uncertainty">
+            <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 1 1 4.4 1.6c-1.1 1.1-2 1.4-2 3M12 17h.01"/></svg></span><span class="tag">Faith & doubt</span></div>
+            <h3>Is it wrong to have doubts?</h3><p>Explore how honest questions can become part of a thoughtful, growing faith.</p><button data-open="doubt">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Character" data-search="forgiveness anger apology resentment forgive">
+            <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.6 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.4-3"/></svg></span><span class="tag">Character</span></div>
+            <h3>How do I forgive someone?</h3><p>Understand forgiveness, rebuilding trust, and why forgiveness doesn't mean accepting harm.</p><button data-open="forgive">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Habits" data-search="prayer start praying routine god">
+            <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M5.6 5.6l2.1 2.1M3 12h3M18 12h3M16.3 7.7l2.1-2.1"/><path d="M8 15.5a5 5 0 1 1 8 0c-.9.8-1.2 1.4-1.2 2.5h-3.6c0-1.1-.3-1.7-1.2-2.5ZM10 21h4"/></svg></span><span class="tag">Habits & prayer</span></div>
+            <h3>How do I start praying?</h3><p>A simple way to begin talking to God without feeling you need perfect words.</p><button data-open="prayer">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Character" data-search="temptation habits self control choices change">
+            <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg></span><span class="tag">Character</span></div>
+            <h3>What if I keep making the same mistake?</h3><p>Look at repentance, practical change, accountability and starting again after failure.</p><button data-open="habits">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Faith" data-search="bible reading understand start scripture">
+            <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 1 4 17.5z"/><path d="M4 6h16M8 9h8M8 12h7"/></svg></span><span class="tag">Faith & doubt</span></div>
+            <h3>Where should I start reading the Bible?</h3><p>Choose a manageable starting point and learn to read a passage in context.</p><button data-open="bible">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Relationships" data-search="right for me dating partner character values respect">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">♡</span><span class="tag">Relationships</span></div>
+            <h3>How do I know if someone is right for me?</h3><p>Look beyond a crush to character, respect, shared values and healthy boundaries.</p><button data-open="rightfor">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Relationships" data-search="friendship friends loyal kind conflict boundaries">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">♡</span><span class="tag">Relationships</span></div>
+            <h3>What does the Bible say about friendship?</h3><p>Explore loyalty, honesty, encouragement and what to do when a friendship is unhealthy.</p><button data-open="friendship">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Habits" data-search="God hear prayers answer silence waiting prayer">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">✦</span><span class="tag">Habits & prayer</span></div>
+            <h3>How do I know God hears my prayers?</h3><p>Consider what Scripture promises—and what it does not promise—about prayer.</p><button data-open="hearsprayer">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Faith" data-search="suffering pain evil why God allows grief illness">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">✦</span><span class="tag">Faith & doubt</span></div>
+            <h3>Why does God allow suffering?</h3><p>Make room for grief and hard questions without pretending there is an easy answer.</p><button data-open="suffering">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Character" data-search="comparison compare envy social media self worth">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">✦</span><span class="tag">Character</span></div>
+            <h3>How do I stop comparing myself to others?</h3><p>Build gratitude and a steadier sense of worth without pretending comparison is easy to stop.</p><button data-open="comparison">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Character" data-search="repent repentance sin change confession forgiveness">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">✦</span><span class="tag">Character</span></div>
+            <h3>What does it mean to repent?</h3><p>Understand repentance as turning back to God and taking real steps toward change.</p><button data-open="repent">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Relationships" data-search="rejection rejected crush friendship left out disappointment">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">♡</span><span class="tag">Relationships</span></div>
+            <h3>How do I deal with rejection?</h3><p>Handle disappointment with dignity, care for yourself and respect the other person’s choice.</p><button data-open="rejection">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Relationships" data-search="boundaries say no pressure personal space consent respect">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">♡</span><span class="tag">Relationships</span></div>
+            <h3>How do I set boundaries with someone?</h3><p>Practise clear, respectful ways to say what you are and are not comfortable with.</p><button data-open="boundaries">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Relationships" data-search="peer pressure friends wrong choice drugs bullying cheating pressure">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">♡</span><span class="tag">Relationships</span></div>
+            <h3>What if my friends pressure me to do something wrong?</h3><p>Plan how to say no, leave an unsafe situation and get support without facing it alone.</p><button data-open="pressure">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Habits" data-search="grow closer to God faith Bible prayer worship community">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">✦</span><span class="tag">Habits & prayer</span></div>
+            <h3>How can I grow closer to God?</h3><p>Start small with Scripture, prayer, worship, community and honest reflection.</p><button data-open="closertogod">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Faith" data-search="atheist friends different beliefs respect evangelism">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">✦</span><span class="tag">Faith & doubt</span></div>
+            <h3>What if my friends don’t believe in God?</h3><p>Learn to stay true to your faith while treating friends with respect and kindness.</p><button data-open="differentbeliefs">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Faith" data-search="difficult Bible passage context interpretation confusing scripture">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">✦</span><span class="tag">Faith & doubt</span></div>
+            <h3>How do I understand a difficult Bible passage?</h3><p>Read in context, notice the genre and compare careful explanations rather than guessing.</p><button data-open="difficultpassage">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Character" data-search="jealousy envy resentment friends possessions achievements">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">✦</span><span class="tag">Character</span></div>
+            <h3>How do I deal with jealousy?</h3><p>Recognise what jealousy is telling you and respond without putting others down.</p><button data-open="jealousy">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Character" data-search="patience anger waiting frustration self control">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">✦</span><span class="tag">Character</span></div>
+            <h3>How can I become more patient?</h3><p>Practise small habits for waiting, listening and responding rather than reacting.</p><button data-open="patience">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="card" data-category="Character" data-search="stand up beliefs respectfully disagreement courage faith">
+            <div class="card-top"><span class="card-icon" aria-hidden="true">✦</span><span class="tag">Character</span></div>
+            <h3>How do I stand up for my beliefs respectfully?</h3><p>Speak honestly with gentleness, listen well and know when a conversation should stop.</p><button data-open="standbeliefs">Explore this question <span aria-hidden="true">→</span></button>
+          </article>
+        </div>
+        <p id="resultCount" style="color:var(--muted);font-size:.86rem;margin-top:18px">Showing 21 questions</p>
+      </div>
+    </section>
+    <section id="approach" style="padding-top:0">
+      <div class="shell">
+        <div class="feature-band">
+          <div><div class="eyebrow">Our approach</div><h2>Faith that meets real life.</h2><p>Good answers should point you back to Scripture, explain the context, and help you decide what to do next — not just tell you what to think.</p></div>
+          <div class="steps">
+            <div class="step"><span class="step-num">01 / SCRIPTURE</span><h3>Look at the Bible</h3><p>Start with relevant passages and their context, not a verse pulled out of nowhere.</p></div>
+            <div class="step"><span class="step-num">02 / REFLECT</span><h3>Ask honest questions</h3><p>Think carefully about what the passage says and what it doesn't say.</p></div>
+            <div class="step"><span class="step-num">03 / PRACTISE</span><h3>Take a next step</h3><p>Choose one realistic action, and seek trusted help when a situation is serious.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="shell footer-inner"><div><a class="brand" href="#top" style="font-size:1.05rem"><span class="brand-mark" style="width:28px;height:28px;border-radius:9px 9px 9px 3px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v18M6.5 8.5h11M5 21h14"/></svg></span><span>faithfound<span style="color:var(--gold)">.</span></span></a><p>Explore faith. Live it out.</p></div><div><p><strong>Built for thoughtful faith.</strong></p><p>FaithFound is an educational resource, not a substitute for pastoral care, professional advice or emergency support.</p><p>Scripture references are provided for personal study. Christians may interpret some topics differently.</p></div></div>
+    <div class="shell" style="margin-top:18px"><button class="btn btn-secondary" id="openEditor" type="button">Edit FaithFound</button></div>
+  </footer>
+</div>
+<div class="editor-backdrop" id="editorBackdrop" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
+  <div class="editor-panel">
+    <div class="modal-head"><div><div class="eyebrow">Your site, your words</div><h2 id="editorTitle">Visual editor</h2></div><button class="close" id="closeEditor" type="button" aria-label="Close editor">×</button></div>
+    <p class="editor-intro">Edit the homepage, guide titles and summaries, and accent colours without touching code. Changes save in this browser only.</p>
+    <div class="editor-subpanel"><h3>Back up or move your work</h3><p class="editor-intro">Export your edits, custom questions and pages to a backup file. You can import that file later in this editor. This is a backup—not a published website or a secure owner login.</p><div class="editor-actions"><button class="btn btn-secondary" id="exportBackup" type="button">Export backup</button><button class="btn btn-secondary" id="importBackupButton" type="button">Import backup</button><input id="importBackupFile" type="file" accept="application/json,.json" hidden></div></div>
+    <div class="editor-grid">
+      <label class="editor-field">Main heading<input id="editHeroTitle" maxlength="180"></label>
+      <label class="editor-field">Intro paragraph<textarea id="editHeroCopy" maxlength="500"></textarea></label>
+      <label class="editor-field">Green accent<input id="editGreen" type="color"></label>
+      <label class="editor-field">Gold accent<input id="editGold" type="color"></label>
+    </div>
+    <div class="editor-subpanel"><h3>Add a question</h3><p class="editor-intro">Create a brand-new question card and a complete guide, including Bible references and practical steps.</p><div class="editor-grid"><label class="editor-field">Question title<input id="newQuestionTitle" maxlength="180" placeholder="e.g. How do I handle anger?"></label><label class="editor-field">Category<select id="newQuestionCategory"><option>Relationships</option><option>Faith</option><option>Character</option><option>Habits</option></select></label><label class="editor-field">Card description<textarea id="newQuestionDescription" maxlength="500" placeholder="A short summary shown on the homepage"></textarea></label><label class="editor-field">Guide introduction<textarea id="newQuestionIntro" maxlength="1200" placeholder="Explain the question and context"></textarea></label><label class="editor-field">Bible references<input id="newQuestionVerse" maxlength="240" placeholder="e.g. James 1:19–20"></label><label class="editor-field">What the passages mean<textarea id="newQuestionVerseText" maxlength="1200"></textarea></label><label class="editor-field">Practical next steps<textarea id="newQuestionSteps" maxlength="2000" placeholder="Write one step per line"></textarea></label><label class="editor-field">Reflection question<input id="newQuestionReflect" maxlength="500"></label><label class="editor-field">Important note / safety advice<textarea id="newQuestionNote" maxlength="1000"></textarea></label></div><div class="editor-actions"><button class="btn btn-primary" id="addQuestion" type="button">Add question to site</button></div></div>
+    <h3>Question cards</h3><p class="editor-intro">Open a question to change its title and short description. Existing guide content stays unchanged unless you add a new guide above.</p>
+    <div id="editorGuides"></div>
+    <div class="editor-subpanel"><h3>Add a page</h3><p class="editor-intro">Create an extra page-like section, such as About, Contact, or a statement of faith. Pages appear on the site with their own links.</p><label class="editor-field">Page title<input id="newPageTitle" maxlength="100" placeholder="e.g. About FaithFound"></label><label class="editor-field">Page content<textarea id="newPageBody" maxlength="8000" placeholder="Write your page content here"></textarea></label><div class="editor-actions"><button class="btn btn-primary" id="addPage" type="button">Add page to site</button></div><div id="editorPages"></div></div>
+    <div class="editor-actions"><button class="btn btn-primary" id="saveEditor" type="button">Save changes</button><button class="btn btn-secondary" id="resetEditor" type="button">Reset edits</button></div>
+    <p class="editor-status" id="editorStatus" role="status" aria-live="polite"></p>
+  </div>
+</div>
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal"><div class="modal-head"><div><div class="eyebrow" id="modalTag">FaithFound guide</div><h2 id="modalTitle">Question</h2></div><button class="close" id="closeModal" aria-label="Close guide">×</button></div><div id="modalContent"></div></div>
+</div>
+<script>
+const guides = {
+ dating: {tag:'Relationships',title:'How should Christians date?',intro:'The Bible does not give a modern dating checklist. It does give principles for love, character, honesty and self-control that can guide relationships.',verse:'1 Corinthians 13:4–7; Philippians 2:3–4; 1 Timothy 4:12',verseText:'Read these passages in context and consider what patient love, humility and being an example look like in everyday relationships.',steps:['Be honest about your intentions and do not pressure someone to date you.','Agree on boundaries that respect both people emotionally, physically and spiritually.','Keep friendships, family, school and other healthy parts of life in balance.','Talk with a trusted adult if you feel pressured, unsafe or confused.'],reflect:'Does this relationship help both people treat each other with respect and grow in character?',note:'Christians differ on some dating questions. This guide offers principles, not a rule that every situation is identical.'},
+ doubt: {tag:'Faith & doubt',title:'Is it wrong to have doubts?',intro:'Having a question is not the same as rejecting God. The Bible includes people who wrestle with uncertainty, grief and difficult questions.',verse:'Mark 9:24; Psalm 13; John 20:24–29',verseText:'Read the whole passage or psalm. Notice how questions and struggle are brought honestly before God.',steps:['Write down the question you actually have rather than pretending it is not there.','Look for thoughtful answers from reliable sources and read Bible passages in context.','Talk to a trusted Christian who can listen without shaming you for asking.','Give yourself time. Not every question has a quick or simple answer.'],reflect:'What would it look like to explore this question honestly rather than hide it?',note:'FaithFound encourages thoughtful questions and does not claim that every Christian tradition explains every issue the same way.'},
+ forgive: {tag:'Character',title:'How do I forgive someone?',intro:'Christian forgiveness means letting go of revenge and seeking what is good. It does not mean pretending the harm was acceptable, removing consequences or immediately trusting someone again.',verse:'Ephesians 4:31–32; Romans 12:18–21; Matthew 18:15–17',verseText:'Notice the call to kindness and peace, while also recognising that making peace depends on the situation and other people’s choices.',steps:['Name what happened honestly. Forgiveness does not require denying the hurt.','If it is safe, explain the harm clearly and set appropriate boundaries.','Remember that rebuilding trust takes time and depends on changed behaviour.','If someone is hurting, threatening or manipulating you, tell a trusted adult and get help. Safety comes first.'],reflect:'What is one step towards letting go of revenge while still protecting healthy boundaries?',note:'If there is abuse or danger, do not handle it alone or feel obligated to meet the person who hurt you.'},
+ prayer: {tag:'Habits & prayer',title:'How do I start praying?',intro:'Prayer does not need impressive words. In Matthew 6:9–13, Jesus gives his disciples a model that includes honouring God, asking for what is needed, seeking forgiveness and asking for guidance.',verse:'Matthew 6:5–13; Philippians 4:6–7; Psalm 62:8',verseText:'Read the passages and notice that prayer includes honesty, gratitude, requests and trust — not just formal language.',steps:['Choose a quiet moment for two or three minutes.','Tell God honestly what is on your mind.','Thank God for one thing, ask for help with one thing, and pray for one other person.','If you want structure, read a short Bible passage and respond to what stands out.'],reflect:'What is one honest thing you want to bring to God today?',note:'There is no need to measure your faith by how polished or long your prayers sound.'},
+ habits: {tag:'Character',title:'What if I keep making the same mistake?',intro:'Christian growth is not pretending to be perfect. It involves admitting what went wrong, turning away from it, seeking help and making practical changes.',verse:'1 John 1:8–9; Galatians 6:1–2; Proverbs 24:16',verseText:'Read these passages together. Confession, restoration and helping one another are all part of Christian life.',steps:['Identify the pattern and what tends to happen just before it.','Make one practical change that makes the harmful choice less likely.','If you have hurt someone, take responsibility and repair what you can.','Ask a trustworthy person for support if the pattern feels difficult to break.'],reflect:'What is one change to your environment or routine that could help you choose differently next time?',note:'If this involves self-harm, abuse, addiction or feeling unsafe, involve a trusted adult or qualified professional.'},
+ bible: {tag:'Faith & doubt',title:'Where should I start reading the Bible?',intro:'If the Bible feels overwhelming, start with a short book about Jesus rather than trying to read everything at once.',verse:'Luke 1:1–4; Mark 1:1; Psalm 119:105',verseText:'The Gospels tell the story of Jesus. Read a small section at a time and pay attention to the people, setting and main point.',steps:['Try reading one short section of Mark each day.','Ask: What does this passage say? What do I learn about God or people?','Read the verses before and after a line that interests you.','Write down questions and revisit them with a trusted Christian or a reliable study resource.'],reflect:'What did you notice in today’s passage, and what would you like to understand better?',note:'Different Bible translations use different wording. Comparing a couple of translations can sometimes clarify a passage.'},
+ rightfor: {tag:'Relationships',title:'How do I know if someone is right for me?',intro:'A crush can feel powerful, but feelings alone cannot tell you whether a relationship is healthy. The Bible emphasises character, love, honesty and self-control more than finding a perfect romantic match. At 14, there is no need to rush into dating.',verse:'1 Corinthians 13:4–7; Galatians 5:22–23; 1 Timothy 4:12',verseText:'Paul describes love through its actions, and Galatians lists qualities that grow through the Spirit. These passages are about character, not a secret test for choosing a partner.',steps:['Notice how they treat people generally, especially when they are frustrated or do not get their way.','Ask whether you can be honest, say no and keep your friendships, family, school and faith commitments.','Look for mutual respect and shared expectations; do not ignore controlling behaviour just because you like them.','Take time. Talk with a trusted adult or mature Christian if you feel unsure or pressured.'],reflect:'Do I feel respected and free to be honest around this person—and do I treat them that way too?',note:'No checklist can guarantee a relationship will work. If someone threatens you, pressures you sexually, asks for intimate images or tries to isolate you, tell a trusted adult; you do not have to manage it alone.'},
+ friendship: {tag:'Relationships',title:'What does the Bible say about friendship?',intro:'The Bible presents friendship as a place for loyalty, encouragement, honesty and mutual care. It does not say that every friendship will last forever or that you must accept harmful treatment.',verse:'Proverbs 17:17; Proverbs 27:5–6; John 15:12–15',verseText:'Proverbs uses wisdom sayings about loyalty and honest correction. In John 15, Jesus speaks to his disciples about love and friendship in the context of his teaching and coming sacrifice.',steps:['Be the kind of friend who listens, keeps appropriate confidences and tells the truth kindly.','Choose friends who respect your boundaries and do not repeatedly push you toward harmful choices.','When conflict happens, speak calmly about the specific behaviour and listen to their side.','If a friendship becomes bullying, threatening or controlling, get help and create distance if needed.'],reflect:'What is one thing I can do this week to be a more reliable friend?',note:'Forgiveness and kindness do not require staying close to someone who is harming you. Ask a trusted adult for help with bullying or threats.'},
+ hearsprayer: {tag:'Habits & prayer',title:'How do I know God hears my prayers?',intro:'The Bible encourages Christians to pray honestly and trust God, but it does not promise that every request will be answered in the way or timing we want. Silence or disappointment does not prove that you have failed at prayer.',verse:'Psalm 13; Matthew 6:7–13; 1 John 5:14–15',verseText:'Psalm 13 shows a believer asking “how long?” before expressing trust. Matthew 6 teaches against prayer as a performance and gives Jesus’ model prayer. First John speaks of asking in line with God’s will, not getting anything we demand.',steps:['Pray honestly about what you want, fear or do not understand; the Psalms model this kind of honesty.','Avoid treating repeated words, perfect behaviour or a special feeling as a way to control God.','Notice support, wisdom and opportunities to act, without assuming every event is a direct sign.','If an answer does not come, keep asking questions and talk with a trusted Christian who can listen.'],reflect:'Have I been assuming that a prayer must be answered in one specific way for God to care?',note:'Do not blame yourself or someone else for illness, loss or hardship by claiming they did not pray correctly. Seek practical help alongside prayer when it is needed.'},
+ suffering: {tag:'Faith & doubt',title:'Why does God allow suffering?',intro:'Christians have wrestled with suffering for centuries. The Bible does not give one simple explanation for every tragedy. It includes lament, questions about injustice, calls to help people who suffer, and hope that pain and death will not have the final word.',verse:'Psalm 13; Job 1–2 and 38–42; John 11:32–36; Romans 8:18–27',verseText:'Job’s story challenges simplistic claims that suffering always happens because someone did wrong. In John 11, Jesus weeps at Lazarus’s tomb. Romans 8 describes creation groaning and waiting for renewal.',steps:['Give yourself permission to grieve and ask honest questions; you do not need to pretend everything is fine.','Do not assume a person’s suffering is punishment or that you know why it happened.','Look for a practical way to help someone who is hurting, such as listening, checking in or getting support.','Bring ongoing questions to a trusted adult, pastor or counsellor who will take your pain seriously.'],reflect:'When I see suffering, what would loving action look like before I try to explain it?',note:'If suffering involves abuse, serious illness, thoughts of self-harm or immediate danger, tell a trusted adult and seek appropriate professional or emergency help. Prayer can accompany help, not replace it.'},
+ comparison: {tag:'Character',title:'How do I stop comparing myself to others?',intro:'Comparison is common, especially when social media shows selected highlights of other people’s lives. The Bible calls people to humility and gratitude, but it does not mean you must never notice differences or goals.',verse:'Galatians 6:4–5; Psalm 139:13–14; 2 Corinthians 10:12',verseText:'Galatians encourages each person to examine their own work rather than boast by comparison. Psalm 139 is a prayer reflecting on being known by God. These passages point away from measuring your worth against someone else.',steps:['Notice what triggers comparison—certain accounts, conversations, grades, appearance or possessions.','Take a break from content that reliably leaves you feeling worse, and remember that posts are selective.','Write down one thing you appreciate and one small goal based on your own values.','Celebrate another person’s success when you can, and talk to someone you trust if comparison is affecting your mood or eating.'],reflect:'What goal matters to me even if nobody else notices or praises it?',note:'Your worth is not measured by appearance, popularity, grades or money. If these thoughts become overwhelming or lead you to harm yourself or your body, tell a trusted adult or health professional.'},
+ repent: {tag:'Character',title:'What does it mean to repent?',intro:'In the Bible, repentance means turning back to God and away from sin. It involves more than feeling guilty: it includes honesty, a changed direction and making things right where possible. Christians may explain some details differently, but repentance is not about earning God’s love by being flawless.',verse:'Mark 1:14–15; Acts 3:19; 2 Corinthians 7:9–11; Luke 19:1–10',verseText:'Jesus calls people to repent and believe in the good news. Zacchaeus’s story shows a changed response through restitution. Second Corinthians distinguishes constructive sorrow from sorrow that leads nowhere.',steps:['Name the action honestly without making excuses or calling yourself worthless.','Confess it to God and, where appropriate, apologise to the person you harmed.','Make a realistic repair or restitution if you can do so safely and fairly.','Change the conditions that led to the choice and ask for support if the pattern continues.'],reflect:'What specific change would show that I am turning in a different direction?',note:'Repentance is not accepting blame for abuse done to you. If someone uses religion to threaten, shame or control you, speak with a safe, trusted adult outside that situation.'},
+ rejection: {tag:'Relationships',title:'How do I deal with rejection?',intro:'Being rejected by a crush, friend group or team can hurt. It does not prove you are worthless, and it does not give you a right to pressure someone into changing their mind. Scripture makes room for grief and encourages care for one another.',verse:'Psalm 34:18; Romans 12:15–18; 1 Peter 5:7',verseText:'Psalm 34 speaks of God’s nearness to the brokenhearted. Romans calls Christians to share others’ joy and sorrow and, as far as it depends on them, pursue peace.',steps:['Let yourself feel disappointed and talk it through with someone you trust.','Respect the other person’s answer; do not spam messages, spread rumours or try to punish them.','Keep doing things that support your wellbeing—sleep, hobbies, school, friendships and movement.','If exclusion becomes repeated bullying, save relevant messages and tell a trusted adult.'],reflect:'What would it look like to respect their choice while still caring for my own feelings?',note:'If rejection leaves you feeling hopeless or unsafe, tell a trusted adult promptly. You do not have to handle intense feelings alone.'},
+ boundaries: {tag:'Relationships',title:'How do I set boundaries with someone?',intro:'A boundary is a clear statement about what you are comfortable with and what you will do if that limit is ignored. Christian love does not mean saying yes to everything; respect, truth and wisdom matter too.',verse:'Matthew 5:37; Proverbs 4:23; Galatians 6:2, 5',verseText:'Matthew 5:37 encourages truthful speech in its teaching about oaths. Proverbs uses the image of guarding your heart as wisdom. Galatians holds both mutual care and personal responsibility together.',steps:['Name the specific behaviour and your limit: “I’m not comfortable with that. Please stop.”','Keep the wording clear and calm; you do not need a long argument to justify a no.','Decide what you will do if it continues, such as leaving, ending the chat or asking for help.','Respect other people’s boundaries too, including their right to say no or change their mind.'],reflect:'What is one boundary I need, and what words could I use to explain it clearly?',note:'You can say no to unwanted touching, sexual pressure, sharing passwords or intimate images. If someone threatens, blackmails or ignores your no, tell a trusted adult; do not meet them alone to sort it out.'},
+ pressure: {tag:'Relationships',title:'What if my friends pressure me to do something wrong?',intro:'Wanting to belong is normal, but friendship should not require you to go against your conscience or risk your safety. The Bible encourages wise choices and warns that close influences can shape our behaviour.',verse:'Proverbs 1:10; Proverbs 13:20; Romans 12:2; 1 Corinthians 15:33',verseText:'Proverbs gives wisdom about avoiding harmful influence, and Romans 12 calls Christians not to be shaped unthinkingly by surrounding patterns. These are principles to use with discernment, not excuses to look down on people.',steps:['Prepare a short response such as “No, I’m not doing that” or “That’s not for me.”','Suggest a different activity if you want to keep the friendship.','Have an exit plan: contact a parent or trusted adult, arrange a pickup, or leave with a safe person.','If pressure continues, reconsider how much time you spend with that group and ask a trusted adult for help.'],reflect:'What could I say or do if the pressure happens when I am with my friends?',note:'If the situation involves drugs, alcohol, violence, dangerous dares, bullying, sexual pressure or requests for intimate images, prioritise getting safe and tell a trusted adult. You will not be wrong for asking for help.'},
+ closertogod: {tag:'Habits & prayer',title:'How can I grow closer to God?',intro:'Spiritual growth is usually a pattern of small steps over time, not a constant strong feeling. Christians commonly grow through prayer, Scripture, worship, community, service and reflecting honestly on their choices.',verse:'John 15:1–11; Acts 2:42–47; Psalm 1:1–3',verseText:'In John 15, Jesus uses the picture of a vine and branches to describe remaining in him. Acts describes the early community learning, praying, sharing and eating together. These passages connect faith with relationship and practice.',steps:['Choose a manageable rhythm, such as reading a short Gospel passage and praying for five minutes.','Join worship or a Christian community where questions are welcome and people are treated safely.','Put one thing you learn into practice by showing kindness, telling the truth or serving someone.','Review the habit gently each week; if you miss a day, simply begin again rather than giving up.'],reflect:'Which small practice could I realistically keep up for the next seven days?',note:'Spiritual growth is not measured by comparing yourself with other Christians or by never struggling. If a leader asks you to keep unsafe secrets or discourages you from seeking help, talk with a trusted adult outside that situation.'},
+ differentbeliefs: {tag:'Faith & doubt',title:'What if my friends don’t believe in God?',intro:'You can take your Christian faith seriously and still be a loyal, respectful friend to someone who does not share it. The New Testament encourages Christians to explain their hope thoughtfully without insulting or coercing others.',verse:'1 Peter 3:15–16; Colossians 4:5–6; Romans 12:18',verseText:'First Peter connects explaining hope with gentleness and respect. Colossians compares speech to words seasoned with salt, and Romans urges peace where possible. These passages guide how to talk, not a guarantee that everyone will agree.',steps:['Listen to what your friend actually believes instead of assuming or trying to win an argument.','If they ask about your faith, explain what you believe and why in your own words.','Ask permission before starting a serious religious conversation and accept it if they do not want one.','Look for shared values and enjoy ordinary friendship; you do not need to agree on everything.'],reflect:'How could I show respect for my friend while being honest about my own beliefs?',note:'Do not use friendship to manipulate someone into faith, and do not accept pressure to hide your beliefs either. Mutual respect includes boundaries on both sides.'},
+ difficultpassage: {tag:'Faith & doubt',title:'How do I understand a difficult Bible passage?',intro:'A confusing verse can become clearer when you look at its surrounding passage, original audience, genre and place in the wider Bible. Some passages remain debated, and Christians should be honest about that.',verse:'Luke 10:25–37; Acts 8:26–35; 2 Timothy 3:14–17',verseText:'In Acts 8, a reader asks for help understanding Scripture. Second Timothy describes Scripture’s role in teaching and forming people. The Good Samaritan story shows why the whole story and its point matter more than isolating a phrase.',steps:['Read the whole paragraph or story, including what comes before and after the verse.','Ask who is speaking, to whom, in what setting and whether the text is poetry, story, law, letter or prophecy.','Compare a couple of reputable translations and check cross-references without treating every cross-reference as the answer.','Read explanations from thoughtful, reliable teachers; note where Christians agree and where interpretations differ.'],reflect:'What changes when I read this verse in its full passage rather than on its own?',note:'Be cautious of anyone who uses one isolated verse to justify abuse, hatred or unsafe behaviour. Ask a trusted, knowledgeable adult or faith leader when a passage troubles you.'},
+ jealousy: {tag:'Character',title:'How do I deal with jealousy?',intro:'Jealousy can reveal fear, insecurity or something you wish you had. Feeling it does not make you a bad person; what matters is how you respond. Scripture warns against envy while encouraging love and contentment.',verse:'James 3:14–18; Galatians 5:22–26; Philippians 2:3–4',verseText:'James contrasts bitter envy with wisdom that is peaceable and considerate. Galatians contrasts destructive patterns with the fruit of the Spirit. Philippians calls readers to look to the interests of others as well as their own.',steps:['Name what triggered the feeling without judging yourself for having it.','Ask what is underneath it: fear of losing a friend, wanting recognition, or wishing for an opportunity.','Choose a constructive action, such as working toward your own goal or giving someone sincere congratulations.','If you need reassurance, speak honestly without controlling who another person can see or be friends with.'],reflect:'What is my jealousy telling me I care about, and what healthy action can I take?',note:'Jealousy does not justify checking someone’s phone, threats, possessiveness or controlling friendships. If someone is controlling you in these ways, talk to a trusted adult.'},
+ patience: {tag:'Character',title:'How can I become more patient?',intro:'Patience is not pretending you are never annoyed. It is learning to pause, endure delay and respond thoughtfully instead of letting frustration control your actions. It develops with practice.',verse:'James 1:19–20; Galatians 5:22–23; Colossians 3:12–13',verseText:'James tells readers to be quick to listen, slow to speak and slow to anger. Galatians includes patience among the fruit of the Spirit. Colossians places patience alongside compassion and forgiveness in community life.',steps:['Notice your early warning signs, such as a tight jaw, faster speech or wanting to interrupt.','Take one slow breath and wait a few seconds before responding.','Practise patience in one small daily situation, like waiting your turn or listening without interrupting.','If you lose patience, apologise for your behaviour and think about what would help next time.'],reflect:'Which situation tests my patience most, and what pause could I practise there?',note:'Patience does not mean tolerating abuse or staying in danger. You can calmly set a limit and get help while still aiming to treat people respectfully.'},
+ standbeliefs: {tag:'Character',title:'How do I stand up for my beliefs respectfully?',intro:'Courage and kindness can go together. The Bible encourages Christians to explain their hope with gentleness, to speak truthfully and to avoid turning disagreement into contempt.',verse:'1 Peter 3:15–16; Colossians 4:5–6; 2 Timothy 2:23–25',verseText:'These passages encourage thoughtful, gracious speech and warn against quarrels that do not help. They do not require you to answer every challenge or stay in an insulting conversation.',steps:['State your belief clearly using “I believe…” rather than insulting people who disagree.','Listen and ask a genuine question so you understand their point before responding.','Admit when you do not know an answer; offer to learn rather than inventing one.','Set a limit or leave if the conversation becomes threatening, humiliating or pointless.'],reflect:'How can I be honest about my convictions while showing that I still respect the other person?',note:'You do not need to accept bullying or discrimination to prove you are kind. If school or online discussions become harassment or threats, document what happened and seek help from a trusted adult.'}
+};
+const editorStorageKey = 'faithfound-visual-edits-v1';
+let customQuestions = [];
+let customPages = [];
+try { const existingEdits = JSON.parse(localStorage.getItem(editorStorageKey) || 'null'); customQuestions = Array.isArray(existingEdits?.customQuestions) ? existingEdits.customQuestions : []; customPages = Array.isArray(existingEdits?.customPages) ? existingEdits.customPages : []; } catch (error) {}
+function createCustomCard(question) {
+ const card = document.createElement('article'); card.className = 'card'; card.dataset.category = question.category; card.dataset.search = `${question.title} ${question.description} ${question.verse || ''}`.toLowerCase();
+ const top = document.createElement('div'); top.className = 'card-top'; const symbol = document.createElement('span'); symbol.className = 'card-icon'; symbol.setAttribute('aria-hidden','true'); symbol.textContent = question.category === 'Relationships' ? '♡' : '✦'; const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = question.category === 'Faith' ? 'Faith & doubt' : question.category === 'Habits' ? 'Habits & prayer' : question.category; top.append(symbol,tag);
+ const heading = document.createElement('h3'); heading.textContent = question.title; const desc = document.createElement('p'); desc.textContent = question.description; const button = document.createElement('button'); button.type = 'button'; button.dataset.open = question.key; button.textContent = 'Explore this question →'; button.addEventListener('click', () => openGuide(question.key)); card.append(top,heading,desc,button); return card;
+}
+function renderCustomPages() {
+ document.querySelectorAll('.custom-page-content, #customPageNav').forEach(el => el.remove());
+ if (!customPages.length) return;
+ const nav = document.createElement('div'); nav.id = 'customPageNav'; nav.className = 'shell custom-page-nav'; nav.setAttribute('aria-label','More pages');
+ const approach = document.getElementById('approach'); approach.appendChild(nav);
+ customPages.forEach((page,index) => { const id = `faithfound-page-${page.id}`; const link = document.createElement('a'); link.href = `#${id}`; link.textContent = page.title; nav.appendChild(link); const section = document.createElement('section'); section.className = 'custom-page-content'; section.id = id; const shell = document.createElement('div'); shell.className = 'shell'; const heading = document.createElement('h2'); heading.textContent = page.title; const body = document.createElement('p'); body.className = 'custom-page-body'; body.textContent = page.body; shell.append(heading,body); section.appendChild(shell); approach.after(section); });
+}
+customQuestions.forEach(question => { if (question && question.key && question.title && question.intro) { guides[question.key] = question.guide; document.getElementById('cards').appendChild(createCustomCard(question)); } });
+renderCustomPages();
+let cards = [...document.querySelectorAll('.card')];
+const filterButtons = [...document.querySelectorAll('.filter')];
+const searchInput = document.getElementById('searchInput');
+let activeFilter = 'All';
+function applyFilters() {
+ cards = [...document.querySelectorAll('.card')];
+ const query = searchInput.value.trim().toLowerCase(); let shown = 0;
+ cards.forEach(card => { const categoryMatch = activeFilter === 'All' || card.dataset.category === activeFilter; const text = ((card.innerText || '') + ' ' + (card.dataset.search || '')).toLowerCase(); const queryMatch = !query || text.includes(query); const visible = categoryMatch && queryMatch; card.hidden = !visible; if (visible) shown++; });
+ let empty = document.querySelector('.empty'); if (!shown) { if (!empty) { empty = document.createElement('div'); empty.className = 'empty'; empty.textContent = 'No exact match yet. Try a different word or choose another topic.'; document.getElementById('cards').appendChild(empty); } } else if (empty) empty.remove();
+ document.getElementById('resultCount').textContent = `Showing ${shown} question${shown === 1 ? '' : 's'}`;
+}
+filterButtons.forEach(button => button.addEventListener('click', () => { activeFilter = button.dataset.filter; filterButtons.forEach(b => { const active = b === button; b.classList.toggle('active', active); b.setAttribute('aria-pressed', String(active)); }); applyFilters(); }));
+document.getElementById('searchForm').addEventListener('submit', event => { event.preventDefault(); applyFilters(); document.getElementById('cards').scrollIntoView({behavior:'smooth',block:'start'}); });
+searchInput.addEventListener('input', applyFilters);
+const backdrop = document.getElementById('modalBackdrop');
+function openGuide(key) { const guide = guides[key]; if (!guide) return; document.getElementById('modalTag').textContent = guide.tag; document.getElementById('modalTitle').textContent = guide.title; const content = document.getElementById('modalContent'); content.replaceChildren(); const intro = document.createElement('p'); intro.textContent = guide.intro; content.appendChild(intro); const scripture = document.createElement('div'); scripture.className = 'scripture'; const strong = document.createElement('strong'); strong.textContent = 'Read and reflect'; const ref = document.createElement('span'); ref.textContent = guide.verse; const verseText = document.createElement('p'); verseText.textContent = guide.verseText; verseText.style.marginBottom = '0'; scripture.append(strong, ref, verseText); content.appendChild(scripture); const heading = document.createElement('h3'); heading.textContent = 'Practical next steps'; content.appendChild(heading); const list = document.createElement('ul'); guide.steps.forEach(step => { const li = document.createElement('li'); li.textContent = step; list.appendChild(li); }); content.appendChild(list); const reflectHead = document.createElement('h3'); reflectHead.textContent = 'A question to think about'; content.appendChild(reflectHead); const reflect = document.createElement('p'); reflect.textContent = guide.reflect; content.appendChild(reflect); const note = document.createElement('p'); note.className = 'modal-footnote'; note.textContent = guide.note; content.appendChild(note); backdrop.classList.add('open'); document.getElementById('closeModal').focus(); document.body.style.overflow = 'hidden'; }
+document.querySelectorAll('[data-open]').forEach(button => button.addEventListener('click', () => openGuide(button.dataset.open)));
+function closeGuide() { backdrop.classList.remove('open'); document.body.style.overflow = ''; }
+document.getElementById('closeModal').addEventListener('click', closeGuide);
+backdrop.addEventListener('click', event => { if (event.target === backdrop) closeGuide(); });
+document.addEventListener('keydown', event => { if (event.key === 'Escape' && backdrop.classList.contains('open')) closeGuide(); });
+const editorBackdrop = document.getElementById('editorBackdrop');
+const originalEditorValues = { heroTitle: document.querySelector('.hero h1').innerText.replace(/\n/g, ' '), heroCopy: document.querySelector('.hero-copy').textContent, green: '#234d38', gold: '#c49a52', cards: cards.map(card => ({ key: card.querySelector('[data-open]').dataset.open, title: card.querySelector('h3').textContent, description: card.querySelector('p').textContent })) };
+function buildEditorFields() {
+ const host = document.getElementById('editorGuides'); host.replaceChildren();
+ cards.forEach((card, index) => { const key = card.querySelector('[data-open]').dataset.open; const details = document.createElement('details'); details.className = 'editor-guide'; if (index === 0) details.open = true; const summary = document.createElement('summary'); summary.textContent = card.querySelector('h3').textContent; const titleLabel = document.createElement('label'); titleLabel.className = 'editor-field'; titleLabel.textContent = 'Question title'; const titleInput = document.createElement('input'); titleInput.maxLength = 180; titleInput.dataset.editorTitle = key; titleInput.value = card.querySelector('h3').textContent; titleLabel.appendChild(titleInput); const descLabel = document.createElement('label'); descLabel.className = 'editor-field'; descLabel.textContent = 'Short description'; const descInput = document.createElement('textarea'); descInput.maxLength = 500; descInput.dataset.editorDescription = key; descInput.value = card.querySelector('p').textContent; descLabel.appendChild(descInput); details.append(summary, titleLabel, descLabel); host.appendChild(details); titleInput.addEventListener('input', () => { summary.textContent = titleInput.value || 'Untitled question'; }); });
+}
+function buildEditorPages() { const host = document.getElementById('editorPages'); host.replaceChildren(); customPages.forEach((page,index) => { const details = document.createElement('details'); details.className = 'editor-page'; const summary = document.createElement('summary'); summary.textContent = page.title; const titleLabel = document.createElement('label'); titleLabel.className = 'editor-field'; titleLabel.textContent = 'Page title'; const title = document.createElement('input'); title.maxLength = 100; title.value = page.title; title.addEventListener('input', () => { page.title = title.value; summary.textContent = title.value || 'Untitled page'; }); titleLabel.appendChild(title); const bodyLabel = document.createElement('label'); bodyLabel.className = 'editor-field'; bodyLabel.textContent = 'Page content'; const body = document.createElement('textarea'); body.maxLength = 8000; body.value = page.body; body.addEventListener('input', () => { page.body = body.value; }); bodyLabel.appendChild(body); const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'btn btn-secondary'; remove.textContent = 'Delete page'; remove.addEventListener('click', () => { customPages = customPages.filter(item => item.id !== page.id); renderCustomPages(); buildEditorPages(); }); details.append(summary,titleLabel,bodyLabel,remove); host.appendChild(details); }); }
+function currentEditorValues() { const cardValues = cards.map(card => { const key = card.querySelector('[data-open]').dataset.open; return { key, title: document.querySelector(`[data-editor-title="${key}"]`).value.trim(), description: document.querySelector(`[data-editor-description="${key}"]`).value.trim() }; }); return { heroTitle: document.getElementById('editHeroTitle').value.trim(), heroCopy: document.getElementById('editHeroCopy').value.trim(), green: document.getElementById('editGreen').value, gold: document.getElementById('editGold').value, cards: cardValues, customQuestions, customPages }; }
+function applyEditorValues(values) { const heading = document.querySelector('.hero h1'); const words = (values.heroTitle || originalEditorValues.heroTitle).split(' '); heading.replaceChildren(); const first = document.createTextNode(words.slice(0, Math.max(1, Math.ceil(words.length / 3))).join(' ')); const emphasis = document.createElement('em'); emphasis.textContent = words.slice(Math.max(1, Math.ceil(words.length / 3)), Math.max(2, Math.ceil(words.length * 2 / 3))).join(' '); const last = document.createTextNode(words.slice(Math.max(2, Math.ceil(words.length * 2 / 3))).join(' ')); heading.append(first, document.createElement('br'), emphasis, document.createElement('br'), last); document.querySelector('.hero-copy').textContent = values.heroCopy || originalEditorValues.heroCopy; document.documentElement.style.setProperty('--green', `light-dark(${values.green || originalEditorValues.green}, #a7d2b1)`); document.documentElement.style.setProperty('--gold', `light-dark(${values.gold || originalEditorValues.gold}, #e1bd77)`); (values.cards || originalEditorValues.cards).forEach(item => { const card = cards.find(c => c.querySelector('[data-open]').dataset.open === item.key); if (!card) return; card.querySelector('h3').textContent = item.title || 'Untitled question'; card.querySelector('p').textContent = item.description || ''; if (guides[item.key]) guides[item.key].title = item.title || 'Untitled question'; }); }
+function openEditor() { buildEditorFields(); buildEditorPages(); let saved = null; try { saved = JSON.parse(localStorage.getItem(editorStorageKey) || 'null'); } catch (error) {} const values = saved || originalEditorValues; document.getElementById('editHeroTitle').value = values.heroTitle; document.getElementById('editHeroCopy').value = values.heroCopy; document.getElementById('editGreen').value = values.green; document.getElementById('editGold').value = values.gold; (values.cards || originalEditorValues.cards).forEach(item => { const title = document.querySelector(`[data-editor-title="${item.key}"]`); const description = document.querySelector(`[data-editor-description="${item.key}"]`); if (title) title.value = item.title; if (description) description.value = item.description; }); document.getElementById('editorStatus').textContent = ''; editorBackdrop.classList.add('open'); document.body.style.overflow = 'hidden'; document.getElementById('closeEditor').focus(); }
+function closeEditor() { editorBackdrop.classList.remove('open'); document.body.style.overflow = ''; }
+document.getElementById('openEditor').addEventListener('click', openEditor);
+document.getElementById('addQuestion').addEventListener('click', () => { const title = document.getElementById('newQuestionTitle').value.trim(); const description = document.getElementById('newQuestionDescription').value.trim(); const intro = document.getElementById('newQuestionIntro').value.trim(); const verse = document.getElementById('newQuestionVerse').value.trim(); const verseText = document.getElementById('newQuestionVerseText').value.trim(); const steps = document.getElementById('newQuestionSteps').value.split('\n').map(step => step.trim()).filter(Boolean); const reflect = document.getElementById('newQuestionReflect').value.trim(); const note = document.getElementById('newQuestionNote').value.trim(); const category = document.getElementById('newQuestionCategory').value; if (!title || !description || !intro || !verse || !verseText || !steps.length || !reflect) { document.getElementById('editorStatus').textContent = 'Fill in the title, description, introduction, Bible references, passage explanation, at least one step and reflection question.'; return; } const key = `custom-${Date.now()}`; const tag = category === 'Faith' ? 'Faith & doubt' : category === 'Habits' ? 'Habits & prayer' : category; const guide = { tag,title,intro,verse,verseText,steps,reflect,note:note || 'Use thoughtful judgement and seek help from a trusted adult or qualified person when a situation is serious.' }; const question = { key,title,description,category,verse,intro,guide }; customQuestions.push(question); guides[key] = guide; const card = createCustomCard(question); document.getElementById('cards').appendChild(card); cards.push(card); buildEditorFields(); applyFilters(); ['newQuestionTitle','newQuestionDescription','newQuestionIntro','newQuestionVerse','newQuestionVerseText','newQuestionSteps','newQuestionReflect','newQuestionNote'].forEach(id => document.getElementById(id).value = ''); document.getElementById('editorStatus').textContent = 'Question added to the page. Click Save changes to keep it in this browser.'; });
+document.getElementById('addPage').addEventListener('click', () => { const title = document.getElementById('newPageTitle').value.trim(); const body = document.getElementById('newPageBody').value.trim(); if (!title || !body) { document.getElementById('editorStatus').textContent = 'Add both a page title and some page content first.'; return; } customPages.push({ id: `p${Date.now()}`, title, body }); renderCustomPages(); buildEditorPages(); document.getElementById('newPageTitle').value = ''; document.getElementById('newPageBody').value = ''; document.getElementById('editorStatus').textContent = 'Page added to the site. Click Save changes to keep it in this browser.'; });
+document.getElementById('exportBackup').addEventListener('click', () => { try { const backup = { format: 'faithfound-backup', version: 1, exportedAt: new Date().toISOString(), data: currentEditorValues() }; const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const link = document.createElement('a'); link.href = url; link.download = 'faithfound-backup.json'; document.body.appendChild(link); link.click(); link.remove(); URL.revokeObjectURL(url); document.getElementById('editorStatus').textContent = 'Backup exported. Keep the JSON file somewhere safe.'; } catch (error) { document.getElementById('editorStatus').textContent = 'Could not export a backup. Try saving your changes first.'; } });
+document.getElementById('importBackupButton').addEventListener('click', () => document.getElementById('importBackupFile').click());
+document.getElementById('importBackupFile').addEventListener('change', async event => { const file = event.target.files && event.target.files[0]; if (!file) return; try { const backup = JSON.parse(await file.text()); const values = backup && backup.format === 'faithfound-backup' && backup.version === 1 ? backup.data : null; if (!values || !Array.isArray(values.cards) || !Array.isArray(values.customQuestions) || !Array.isArray(values.customPages) || typeof values.heroTitle !== 'string' || typeof values.heroCopy !== 'string') throw new Error('Invalid backup'); customQuestions.forEach(question => delete guides[question.key]); document.querySelectorAll('.card').forEach(card => card.remove()); customQuestions = values.customQuestions.filter(question => question && question.key && question.guide && question.title); customPages = values.customPages.filter(page => page && page.id && page.title && typeof page.body === 'string'); customQuestions.forEach(question => { guides[question.key] = question.guide; document.getElementById('cards').appendChild(createCustomCard(question)); }); originalEditorValues.cards.forEach(item => { const source = document.querySelector(`[data-open="${item.key}"]`); if (!source) { const original = originalEditorValues.cards.find(card => card.key === item.key); if (original && guides[item.key]) { const card = document.createElement('article'); card.className = 'card'; card.dataset.category = guides[item.key].tag === 'Faith & doubt' ? 'Faith' : guides[item.key].tag === 'Habits & prayer' ? 'Habits' : guides[item.key].tag; card.dataset.search = `${original.title} ${original.description}`.toLowerCase(); const heading = document.createElement('h3'); heading.textContent = original.title; const description = document.createElement('p'); description.textContent = original.description; const button = document.createElement('button'); button.type = 'button'; button.dataset.open = item.key; button.textContent = 'Explore this question →'; button.addEventListener('click', () => openGuide(item.key)); card.append(heading, description, button); document.getElementById('cards').appendChild(card); } } }); cards.splice(0, cards.length, ...document.querySelectorAll('.card')); renderCustomPages(); localStorage.setItem(editorStorageKey, JSON.stringify(values)); applyEditorValues(values); buildEditorFields(); buildEditorPages(); document.getElementById('editHeroTitle').value = values.heroTitle; document.getElementById('editHeroCopy').value = values.heroCopy; document.getElementById('editGreen').value = values.green || originalEditorValues.green; document.getElementById('editGold').value = values.gold || originalEditorValues.gold; (values.cards || []).forEach(item => { const title = document.querySelector(`[data-editor-title="${item.key}"]`); const description = document.querySelector(`[data-editor-description="${item.key}"]`); if (title) title.value = item.title; if (description) description.value = item.description; }); applyFilters(); document.getElementById('editorStatus').textContent = 'Backup imported. Review it, then click Save changes to keep it in this browser.'; } catch (error) { document.getElementById('editorStatus').textContent = 'That file could not be imported. Choose a valid FaithFound backup JSON file.'; } finally { event.target.value = ''; } });
+document.getElementById('closeEditor').addEventListener('click', closeEditor);
+editorBackdrop.addEventListener('click', event => { if (event.target === editorBackdrop) closeEditor(); });
+document.getElementById('saveEditor').addEventListener('click', () => { const values = currentEditorValues(); if (!values.heroTitle || !values.heroCopy || values.cards.some(item => !item.title || !item.description)) { document.getElementById('editorStatus').textContent = 'Please fill in every title and description before saving.'; return; } try { localStorage.setItem(editorStorageKey, JSON.stringify(values)); applyEditorValues(values); document.getElementById('editorStatus').textContent = 'Saved in this browser. Refreshing this page will keep your edits here.'; } catch (error) { document.getElementById('editorStatus').textContent = 'Could not save in this browser. Check your browser storage settings.'; } });
+document.getElementById('resetEditor').addEventListener('click', () => { try { localStorage.removeItem(editorStorageKey); } catch (error) {} customQuestions.forEach(question => delete guides[question.key]); customQuestions = []; customPages = []; document.querySelectorAll('.card[data-search^=""]').forEach(card => { if (card.querySelector('[data-open]') && card.querySelector('[data-open]').dataset.open.startsWith('custom-')) card.remove(); }); cards.splice(0, cards.length, ...document.querySelectorAll('.card')); document.querySelectorAll('.custom-page-content, #customPageNav').forEach(el => el.remove()); applyEditorValues(originalEditorValues); buildEditorFields(); buildEditorPages(); openEditor(); document.getElementById('editorStatus').textContent = 'Custom questions and pages removed; original content restored.'; });
+try { const savedEdits = JSON.parse(localStorage.getItem(editorStorageKey) || 'null'); if (savedEdits) applyEditorValues(savedEdits); } catch (error) {}
+document.addEventListener('keydown', event => { if (event.key === 'Escape' && editorBackdrop.classList.contains('open')) closeEditor(); });
+</script>
+</body>
+</html>
